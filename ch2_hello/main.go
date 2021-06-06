@@ -11,8 +11,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	log.Println("This is my hello world example")
 }
 
+func handlerHealthz(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "I am fine")
+	log.Println("This is the health check")
+}
+
 func main() {
 	http.HandleFunc("/", handler)
-	log.Fatal(http.ListenAndServe(":8888", nil))
+	http.HandleFunc("/healthz", handlerHealthz)
 	log.Fatal(http.ListenAndServe(":8888", nil))
 }
